@@ -67,8 +67,14 @@ public class LinkedList<T extends Comparable<T>>
 		Node<T> previousNode = aNode.getPrevious();
 		Node<T> nextNode = aNode.getNext();
 		
-		previousNode.setNext(nextNode);
-		nextNode.setPrevious(previousNode);
+		if(previousNode != null)
+		{
+			previousNode.setNext(nextNode);
+		}
+		if(nextNode != null)
+		{
+			nextNode.setNext(nextNode);
+		}
 		
 		aNode.setNext(null);
 		aNode.setPrevious(null);
