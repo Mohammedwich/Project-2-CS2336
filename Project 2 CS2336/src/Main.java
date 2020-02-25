@@ -22,7 +22,7 @@ public class Main
 		
 		printedList = testList.toString();
 		System.out.println(printedList);
-		
+		System.out.flush();
 		
 
 	}

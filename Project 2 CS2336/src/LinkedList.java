@@ -51,7 +51,10 @@ public class LinkedList<T extends Comparable<T>>
 		else
 		{
 			listTail.setNext(aNode);
-			listTail = listTail.getNext();   
+			Node<T> nodeBefore = listTail;
+			listTail = listTail.getNext();  
+			listTail.setPrevious(nodeBefore);
+			
 			++size;
 		}
 		
@@ -99,12 +102,14 @@ public class LinkedList<T extends Comparable<T>>
 			    smallestOrLargestNode.setPrevious(tempPrevious);
 	
 			    firstNode = smallestOrLargestNode.getNext();
+			    currentNode = firstNode.getNext();
 			    
-	
+			    /*
 			    if(firstNode != listTail)
 			    {
 			       currentNode = firstNode.getNext();
 			    }
+			    */
 			}
 			
 		} //if byAscending==true end
