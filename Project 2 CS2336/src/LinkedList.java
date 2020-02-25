@@ -43,9 +43,18 @@ public class LinkedList<T extends Comparable<T>>
 	
 	public void addNode(Node<T> aNode)
 	{
-	   listTail.setNext(aNode);
-	   listTail = aNode;   
-	   ++size;
+		if(listHead == null)
+		{
+			listHead = aNode;
+			listTail = aNode;
+		}
+		else
+		{
+			listTail.setNext(aNode);
+			listTail = listTail.getNext();   
+			++size;
+		}
+		
 	}
 	
 	public int getSize()
@@ -139,6 +148,13 @@ public class LinkedList<T extends Comparable<T>>
 			}
 			
 		} //if byAscending==false end
+		
+		String sortedHeadValue = listHead.toString();
+		String sortedTailValue = listTail.toString();
+		
+		System.out.println("Head: " + sortedHeadValue + ", " + "Tail: " + sortedTailValue);
+		
+		
 	} // sort function end
 
 	public String search(String keyword)
@@ -182,9 +198,9 @@ public class LinkedList<T extends Comparable<T>>
 		StringBuilder builder = new StringBuilder();
 		String result;
 	
-		while(currentNode.getNext() != null)
+		while(currentNode != null)
 		{
-		  builder.append(currentNode.toString());
+		  builder.append(currentNode.toString() + "\n");
 		  currentNode = currentNode.getNext();
 		}
 		
