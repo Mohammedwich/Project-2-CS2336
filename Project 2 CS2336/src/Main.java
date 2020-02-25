@@ -18,11 +18,13 @@ public class Main
 		testList.addNode(node3);
 		testList.addNode(node4);
 		
+		printedList = testList.toString();
+		System.out.println(printedList);
+		
 		testList.sort(true);
 		
 		printedList = testList.toString();
 		System.out.println(printedList);
-		System.out.flush();
 		
 
 	}

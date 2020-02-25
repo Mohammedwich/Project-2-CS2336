@@ -1,5 +1,6 @@
 //Mohammed Ahmed, msa190000
 
+import java.util.ArrayList;
 
 public class LinkedList<T extends Comparable<T>>
 {
@@ -47,6 +48,8 @@ public class LinkedList<T extends Comparable<T>>
 		{
 			listHead = aNode;
 			listTail = aNode;
+			
+			++size;
 		}
 		else
 		{
@@ -56,9 +59,23 @@ public class LinkedList<T extends Comparable<T>>
 			listTail.setPrevious(nodeBefore);
 			
 			++size;
-		}
-		
+		}		
 	}
+	
+	public void removeNode(Node<T> aNode)
+	{
+		Node<T> previousNode = aNode.getPrevious();
+		Node<T> nextNode = aNode.getNext();
+		
+		previousNode.setNext(nextNode);
+		nextNode.setPrevious(previousNode);
+		
+		aNode.setNext(null);
+		aNode.setPrevious(null);
+		
+		--size;
+	}
+	
 	
 	public int getSize()
 	{
@@ -68,89 +85,129 @@ public class LinkedList<T extends Comparable<T>>
 	//Used to be: 	public void sort(boolean byName, boolean byAscending) but compare should happen based on payload's flag
 	public void sort(boolean byAscending)
 	{
-		Node<T> firstNode = listHead;
-		Node<T> currentNode = firstNode.getNext();
-		Node<T> smallestOrLargestNode = firstNode; // Holds the smallest/largest node when sorting by ascending/descending
+		Node<T> currentNode = listHead;
+		int initialSize = size;
+		ArrayList<Node<T>> nodesArray = new ArrayList<Node<T>>(); //fix pointers as they are added.
+		
 		
 		if(byAscending == true)
 		{
-			while(firstNode != listTail)
+			while(nodesArray.size() != initialSize) //keep going till we collected all elements.
 			{
-			    while(currentNode != null)
-			    {
-			    	if(smallestOrLargestNode.compareTo(currentNode) >= 1)
+				currentNode = listHead;
+				Node<T> smallestOrLargestNode = currentNode; // Holds the smallest/largest node when sorting by ascending/descending
+				
+				//Make put a value we don't already have inside
+				while(nodesArray.contains(smallestOrLargestNode))
+				{
+					smallestOrLargestNode = smallestOrLargestNode.getNext();
+				}
+				
+				while(currentNode != null) //Iterates over the list and gets the smallest value we don't already have.
+				{					
+					if(currentNode.compareTo(smallestOrLargestNode) <= -1)
 			    	{
-			    		smallestOrLargestNode = currentNode;
+						if(!nodesArray.contains(currentNode))
+						{
+							smallestOrLargestNode = currentNode;
+						}
+			    		
+			    		currentNode = currentNode.getNext();
 			    	}
-	
-			    	if(smallestOrLargestNode == listTail)
-			    	{
-			    		listTail = firstNode;
-			    	} //since firstNode and smallestNode will be switched, set the new tail
-	
-				   currentNode = currentNode.getNext();
-			    }
-			    
-			    //switch nodes pointers
-			    Node<T> tempNext = firstNode.getNext();
-			    Node<T> tempPrevious = firstNode.getPrevious();
-			    
-			    firstNode.setNext(smallestOrLargestNode.getNext());
-			    firstNode.setPrevious(smallestOrLargestNode.getPrevious());
-	
-			    smallestOrLargestNode.setNext(tempNext);
-			    smallestOrLargestNode.setPrevious(tempPrevious);
-	
-			    firstNode = smallestOrLargestNode.getNext();
-			    currentNode = firstNode.getNext();
-			    
-			    /*
-			    if(firstNode != listTail)
-			    {
-			       currentNode = firstNode.getNext();
-			    }
-			    */
+					else
+					{
+						currentNode = currentNode.getNext();
+					}
+				}
+				
+				nodesArray.add(smallestOrLargestNode);
 			}
+			
+			//Adjust all previous and next pointers
+			for(int i = 0; i < initialSize; ++i)
+			{
+				Node<T> theNode = nodesArray.get(i);
+				
+				if(i == 0)
+				{
+					theNode.setPrevious(null);
+					theNode.setNext(nodesArray.get(i+1));
+				}
+				else if(i == (initialSize-1))
+				{
+					theNode.setPrevious(nodesArray.get(i-1));
+					theNode.setNext(null);
+				}
+				else
+				{
+					theNode.setPrevious(nodesArray.get(i-1));
+					theNode.setNext(nodesArray.get(i+1));
+				}
+			}
+			
+			listHead = nodesArray.get(0);
+			listTail = nodesArray.get(initialSize-1);
+			
 			
 		} //if byAscending==true end
 		
 		if(byAscending == false)
 		{
-			while(firstNode != listTail)
+			while(nodesArray.size() != initialSize) //keep going till we collected all elements.
 			{
-			    while(currentNode != null)
-			    {
-			    	if(smallestOrLargestNode.compareTo(currentNode) <= -1)
+				currentNode = listHead;
+				Node<T> smallestOrLargestNode = currentNode; // Holds the smallest/largest node when sorting by ascending/descending
+				
+				//Make put a value we don't already have inside
+				if(nodesArray.contains(smallestOrLargestNode))
+				{
+					smallestOrLargestNode = smallestOrLargestNode.getNext();
+				}
+				
+				while(currentNode != null) //Iterates over the list and gets the smallest value we don't already have.
+				{					
+					if(currentNode.compareTo(smallestOrLargestNode) >= 1)
 			    	{
-			    		smallestOrLargestNode = currentNode;
+						if(!nodesArray.contains(currentNode))
+						{
+							smallestOrLargestNode = currentNode;
+						}
+			    		
+			    		currentNode = currentNode.getNext();
 			    	}
-	
-			    	if(smallestOrLargestNode == listTail)
-			    	{
-			    		listTail = firstNode;
-			    	} //since firstNode and smallestNode will be switched, set the new tail
-	
-				   currentNode = currentNode.getNext();
-			    }
-			    
-			    //switch nodes pointers
-			    Node<T> tempNext = firstNode.getNext();
-			    Node<T> tempPrevious = firstNode.getPrevious();
-			    
-			    firstNode.setNext(smallestOrLargestNode.getNext());
-			    firstNode.setPrevious(smallestOrLargestNode.getPrevious());
-	
-			    smallestOrLargestNode.setNext(tempNext);
-			    smallestOrLargestNode.setPrevious(tempPrevious);
-	
-			    firstNode = smallestOrLargestNode.getNext();
-			    
-	
-			    if(firstNode != listTail)
-			    {
-			       currentNode = firstNode.getNext();
-			    }
+					else
+					{
+						currentNode = currentNode.getNext();
+					}
+				}
+				
+				nodesArray.add(smallestOrLargestNode);
 			}
+			
+			//Adjust all previous and next pointers
+			for(int i = 0; i < initialSize; ++i)
+			{
+				Node<T> theNode = nodesArray.get(i);
+				
+				if(i == 0)
+				{
+					theNode.setPrevious(null);
+					theNode.setNext(nodesArray.get(i+1));
+				}
+				else if(i == (initialSize-1))
+				{
+					theNode.setPrevious(nodesArray.get(i-1));
+					theNode.setNext(null);
+				}
+				else
+				{
+					theNode.setPrevious(nodesArray.get(i-1));
+					theNode.setNext(nodesArray.get(i+1));
+				}
+			}
+			
+			listHead = nodesArray.get(0);
+			listTail = nodesArray.get(initialSize-1);
 			
 		} //if byAscending==false end
 		
