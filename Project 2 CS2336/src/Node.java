@@ -9,7 +9,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>>
 	private Node<T> previousNode;
 
 	public Node()
-	{
+	{ 
 		heldObject = null;
 		nextNode = null;
 		previousNode = null;

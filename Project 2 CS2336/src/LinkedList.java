@@ -172,7 +172,7 @@ public class LinkedList<T extends Comparable<T>>
 			}
 		}
 		
-		return result;
+		return result; 
 	}
 	
 	@Override
