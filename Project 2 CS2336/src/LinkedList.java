@@ -98,7 +98,7 @@ public class LinkedList<T extends Comparable<T>>
 			    }
 			}
 			
-		} //if byAscending true end
+		} //if byAscending==true end
 		
 		if(byAscending == false)
 		{
@@ -138,8 +138,42 @@ public class LinkedList<T extends Comparable<T>>
 			    }
 			}
 			
-		} //if byAscending false end
+		} //if byAscending==false end
 	} // sort function end
+
+	public String search(String keyword)
+	{
+		String result = keyword + " not found.";
+		
+		String currentStringToCheck;
+		Node<T> currentNode = listHead;
+		
+		while(currentNode != null)
+		{
+			currentStringToCheck = currentNode.toString();
+			
+			if(currentStringToCheck.contains(keyword))
+			{
+				String temp = currentStringToCheck;
+				temp.replace('\t', ' '); //replace the tab between pilotname and area with a space
+				result = temp;
+				return result;
+			}
+			else
+			{
+				if(currentNode != listTail)
+				{
+					currentNode = currentNode.getNext();
+				}
+				else
+				{
+					currentNode = null;
+				}
+			}
+		}
+		
+		return result;
+	}
 	
 	@Override
 	public String toString()
@@ -151,7 +185,7 @@ public class LinkedList<T extends Comparable<T>>
 		while(currentNode.getNext() != null)
 		{
 		  builder.append(currentNode.toString());
-		  currentNode = (Node<T>) currentNode.getNext();
+		  currentNode = currentNode.getNext();
 		}
 		
 		result = builder.toString();

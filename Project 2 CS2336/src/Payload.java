@@ -94,7 +94,7 @@ public class Payload implements Comparable<Payload>
 	@Override
 	public String toString()
 	{
-		String result = (name + "\t" + area + "\n");
+		String result = (name + "\t" + area);
 		return result;
 	}
 }
