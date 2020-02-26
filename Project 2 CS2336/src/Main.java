@@ -154,7 +154,7 @@ public class Main
 				
 				++currentCoordinate;	//sum until last coordinate is the same as first coordinate
 				
-				//Prevents out of bounds since coordinates array is 16 elements max
+				//Prevents out of bounds since coordinates array is 16 elements max 
 				if(currentCoordinate == 15)
 				{
 					break;
