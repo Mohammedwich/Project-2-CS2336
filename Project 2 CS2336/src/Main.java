@@ -13,21 +13,20 @@ import java.util.regex.*;
 
 public class Main
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws FileNotFoundException
 	{
-		Pattern thePattern = Pattern.compile("[\\s][\\d]");
-		String testString = "Jack Jones 3,4 5,6 7,8 3,4";
-		Scanner testScanner = new Scanner(testString);
+		//debug test code
+		ArrayList<ArrayList<Double>> testList = new ArrayList<ArrayList<Double>>();
+		ArrayList<Double> doubleList = new ArrayList<Double>();
+		doubleList.add(1.0);
+		doubleList.add(2.0);
+		testList.add(doubleList);
+		testList.add(new ArrayList<Double>(doubleList));
 		
+		testList.get(0).add(3.0);
 		
-		testScanner.useDelimiter(thePattern);
-		System.out.println(testScanner.next());
-		testScanner.useDelimiter(" ");
+		System.out.println(testList);
 		
-		while(testScanner.hasNext())
-		{
-			System.out.println(testScanner.next());
-		}
 		
 		/*
 		String pilotNamesInputName;
@@ -42,6 +41,7 @@ public class Main
 		System.out.println("Enter the commands file name: ");
 		commandsInputName = inputScanner.next();
 		File commandsInputFile = new File(commandsInputName);
+		
 		
 		//create output file objects
 		File pilotAreasOutputFile = new File("pilot_areas.txt");
@@ -97,16 +97,46 @@ public class Main
 		ArrayList<String> namesList = new ArrayList<String>();
 		ArrayList<Double> areasList = new ArrayList<Double>();
 		
+		int numberOfLinesInInputFile = 0; //will use this to expand the list so elements can be referenced in extractData()
 		
+		
+		Scanner lineCounter = new Scanner(pilotAreasInputFile);
+		while(lineCounter.hasNextLine())
+		{
+			++numberOfLinesInInputFile;
+			lineCounter.nextLine();
+		}
+		
+		namesList.ens
+		
+		
+		
+		//*********************************
+		
+		//Take data from file and put it in arrays
+		extractData(namesList, coordinatesList, pilotAreasInputFile);
+		
+		
+		//Passing each pilot's 2D coordinates array to the calculateArea function
+		for(int i = 0; i < namesList.size(); ++i)
+		{
+			areasList.add(calculateArea(coordinatesList.get(i)) );
+		}
+		
+		//Write data from arrays to output file
+		writeData(namesList, areasList, pilotAreasOutputFile);
+		
+		//*********************************
 
 		inputScanner.close();
+		lineCounter.close();
 		*/
 	}//main end
 
 	
 	//Functions
 	//*********************************************************************************
-	//The formula: 0.5 * absoluteValue( Summation( x(i) + x(i-1) ) * (y(i) - y(i-1) ) )
+	//The area formula: 0.5 * absoluteValue( Summation( x(i) + x(i-1) ) * (y(i) - y(i-1) ) )
 		// Takes the 2D list inside one of the elements of the 3D array as a parameter. The array inside a list's first dimension basically
 		static double calculateArea(ArrayList<ArrayList<Double>> theList)
 		{
@@ -153,7 +183,7 @@ public class Main
 			int currentLineIndex = 0; // Will be incremented after each line is stored
 			Pattern thePattern = Pattern.compile("[\\s][\\d]"); //Used to pick a mutiword name before starting on coordinates
 			
-			while(fileReader.hasNextLine() && currentLineIndex < theCoordinatesList.size())
+			while(fileReader.hasNextLine() /*&& currentLineIndex < theCoordinatesList.size()*/) // unnecessary code in comment?
 			{
 				int currentCoordinateindex = 0; // Allows us to take both parts of a coordinate since space separates them
 				
@@ -189,6 +219,7 @@ public class Main
 		// Takes array of names, array of areas and an output file. Writes every name followed by a tab and its area
 		static void writeData(ArrayList<String> theNamesList, ArrayList<Double> theAreasList, File theFile) throws FileNotFoundException
 		{
+			//System.out.println(theNamesList); //debug code
 			PrintWriter writer = new PrintWriter(theFile);
 			
 			for(int i = 0; i < theNamesList.size(); ++i)
