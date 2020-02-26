@@ -15,6 +15,7 @@ public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException
 	{
+		/*
 		//debug test code
 		ArrayList<ArrayList<Double>> testList = new ArrayList<ArrayList<Double>>();
 		ArrayList<Double> doubleList = new ArrayList<Double>();
@@ -26,9 +27,9 @@ public class Main
 		testList.get(0).add(3.0);
 		
 		System.out.println(testList);
+		*/
 		
 		
-		/*
 		String pilotNamesInputName;
 		String commandsInputName;
 		Scanner inputScanner = new Scanner(System.in);
@@ -107,16 +108,16 @@ public class Main
 			lineCounter.nextLine();
 		}
 		
-		namesList.ens
-		
 		
 		
 		//*********************************
 		
 		//Take data from file and put it in arrays
 		extractData(namesList, coordinatesList, pilotAreasInputFile);
+		System.out.println(namesList); //debug code
+		System.out.println(coordinatesList); //debug code
 		
-		
+		/*
 		//Passing each pilot's 2D coordinates array to the calculateArea function
 		for(int i = 0; i < namesList.size(); ++i)
 		{
@@ -125,12 +126,12 @@ public class Main
 		
 		//Write data from arrays to output file
 		writeData(namesList, areasList, pilotAreasOutputFile);
-		
+		*/
 		//*********************************
 
 		inputScanner.close();
 		lineCounter.close();
-		*/
+		
 	}//main end
 
 	
@@ -181,11 +182,14 @@ public class Main
 
 			String currentLine; // Will hold one line at a time for processing
 			int currentLineIndex = 0; // Will be incremented after each line is stored
-			Pattern thePattern = Pattern.compile("[\\s][\\d]"); //Used to pick a mutiword name before starting on coordinates
+			
+			//Used to make scanner pick a mutiword name before starting on coordinates by changing its delimiter temporarily
+			Pattern thePattern = Pattern.compile("[\\s][-\\d]"); 
 			
 			while(fileReader.hasNextLine() /*&& currentLineIndex < theCoordinatesList.size()*/) // unnecessary code in comment?
 			{
-				int currentCoordinateindex = 0; // Allows us to take both parts of a coordinate since space separates them
+				//TODO: remove this line if not needed anymore
+				//int currentCoordinateindex = 0; // Allows us to take both parts of a coordinate since space separates them
 				
 				//Put line in a string and commas with spaces before passing the string to another scanner
 				currentLine = fileReader.nextLine();
@@ -197,13 +201,23 @@ public class Main
 				theNamesList.add(stringScanner.next()); // Store the pilot's name before storing coordinates
 				stringScanner.useDelimiter(" "); //change delimiter back to space
 				
+				//create and add the list of coordinates so we can add to it.
+				theCoordinatesList.add(new ArrayList<ArrayList<Double>>(1) );
+				
 				while(stringScanner.hasNext())
 				{
 					//Store x and y coordinate
-					theCoordinatesList.get(currentLineIndex).get(currentCoordinateindex).add(Double.parseDouble(stringScanner.next() ));
-					theCoordinatesList.get(currentLineIndex).get(currentCoordinateindex).add(Double.parseDouble(stringScanner.next() ));
+					double x = Double.parseDouble(stringScanner.next());
+					double y = Double.parseDouble(stringScanner.next());
+					
+					//create a list of doubles(a coordinates pair) so we can add it to the list of coordinates we created just before this loop
+					ArrayList<Double> doubleList = new ArrayList<Double>(2);
+					doubleList.add(x);
+					doubleList.add(y);
+					
+					theCoordinatesList.get(currentLineIndex).add(doubleList);
 									
-					++currentCoordinateindex;
+					//++currentCoordinateindex; //Remove this line if not needed anymore
 				}
 				
 				++currentLineIndex;
