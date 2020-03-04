@@ -100,7 +100,6 @@ public class Main
 		
 		int numberOfLinesInInputFile = 0; //will use this to expand the list so elements can be referenced in extractData()
 		
-		
 		Scanner lineCounter = new Scanner(pilotAreasInputFile);
 		while(lineCounter.hasNextLine())
 		{
@@ -114,19 +113,23 @@ public class Main
 		
 		//Take data from file and put it in arrays
 		extractData(namesList, coordinatesList, pilotAreasInputFile);
-		System.out.println(namesList); //debug code
-		System.out.println(coordinatesList); //debug code
+		//System.out.println(namesList); //debug code
+		//System.out.println(coordinatesList); //debug code
 		
-		/*
+		
 		//Passing each pilot's 2D coordinates array to the calculateArea function
 		for(int i = 0; i < namesList.size(); ++i)
 		{
 			areasList.add(calculateArea(coordinatesList.get(i)) );
 		}
 		
+		System.out.println(areasList);
+		
+		
 		//Write data from arrays to output file
 		writeData(namesList, areasList, pilotAreasOutputFile);
-		*/
+		
+		
 		//*********************************
 
 		inputScanner.close();
@@ -141,6 +144,7 @@ public class Main
 		// Takes the 2D list inside one of the elements of the 3D array as a parameter. The array inside a list's first dimension basically
 		static double calculateArea(ArrayList<ArrayList<Double>> theList)
 		{
+			int listSize = theList.size(); // will be used to end the loop
 			int currentCoordinate = 1; // Starts at 1 since the formula needs to sum/sub an x or y with the next x or y
 			double sum = 0;
 			double area = 0;
@@ -154,8 +158,8 @@ public class Main
 				
 				++currentCoordinate;	//sum until last coordinate is the same as first coordinate
 				
-				//Prevents out of bounds since coordinates array is 16 elements max 
-				if(currentCoordinate == 15)
+				//Prevents out of bounds 
+				if(currentCoordinate == (listSize - 2))
 				{
 					break;
 				}
@@ -167,7 +171,7 @@ public class Main
 			
 			
 			area = 0.5 * Math.abs(sum);
-			
+			//TODO: see if we need to do any rounding here
 			return area;
 		}
 		
