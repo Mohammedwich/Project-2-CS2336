@@ -60,20 +60,20 @@ public class Payload implements Comparable<Payload>
 			if(compareByName == true)
 			{
 				int result;
-				result = name.compareTo(((Payload)o).getName() );
+				result = name.compareTo(o.getName() );
 				return result;
 			}
 			else
 			{
-				if(area < ((Payload)o).getArea())
+				if(area < o.getArea())
 				{
 					return -1;
 				}
-				else if(area == ((Payload)o).getArea())
+				else if(area == o.getArea())
 				{
 					return 0;
 				}
-				else if(area > ((Payload)o).getArea())
+				else if(area > o.getArea())
 				{
 					return 1;
 				}

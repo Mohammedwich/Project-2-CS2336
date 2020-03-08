@@ -55,7 +55,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>>
 	public int compareTo(Node<T> o)
 	{
 		int result;
-		result = heldObject.compareTo( (T) o.getObject() );
+		result = heldObject.compareTo( o.getObject() );
 		
 		return result;
 	}
