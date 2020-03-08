@@ -109,7 +109,7 @@ public class LinkedList<T extends Comparable<T>>
 					smallestOrLargestNode = smallestOrLargestNode.getNext();
 				}
 				
-				while(currentNode != null) //Iterates over the list and gets the smallest value we don't already have.
+				while(currentNode != null && smallestOrLargestNode != null) //Iterates over the list and gets the smallest value we don't already have.
 				{					
 					if(currentNode.compareTo(smallestOrLargestNode) <= -1)
 			    	{
@@ -126,7 +126,11 @@ public class LinkedList<T extends Comparable<T>>
 					}
 				}
 				
-				nodesArray.add(smallestOrLargestNode);
+				if(smallestOrLargestNode != null)
+				{
+					nodesArray.add(smallestOrLargestNode);
+				}
+				
 			}
 			
 			//Adjust all previous and next pointers
@@ -169,7 +173,7 @@ public class LinkedList<T extends Comparable<T>>
 					smallestOrLargestNode = smallestOrLargestNode.getNext();
 				}
 				
-				while(currentNode != null) //Iterates over the list and gets the smallest value we don't already have.
+				while(currentNode != null && smallestOrLargestNode != null) //Iterates over the list and gets the smallest value we don't already have.
 				{					
 					//Check: Don't Erase this comment!! Used to be >= 1, changed to zero to fix an issue where equal items were not being added. See if reverting or adjusting ascending sort fixes any potential issues with this in the future  
 					if(currentNode.compareTo(smallestOrLargestNode) >= 1) 
@@ -187,7 +191,10 @@ public class LinkedList<T extends Comparable<T>>
 					}
 				}
 				
-				nodesArray.add(smallestOrLargestNode);
+				if(smallestOrLargestNode != null)
+				{
+					nodesArray.add(smallestOrLargestNode);
+				}
 			}
 			
 			//Adjust all previous and next pointers
