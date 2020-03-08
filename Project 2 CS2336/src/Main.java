@@ -226,7 +226,7 @@ public class Main
 				}
 				else
 				{
-					outputString = "Head: " + payLoadsList.getHead().getObject().getArea() + ", Tail: " + payLoadsList.getTail().getObject().getArea();  
+					outputString = String.format("Head: %.2f, Tail: %.2f", payLoadsList.getHead().getObject().getArea(), payLoadsList.getTail().getObject().getArea());
 				}
 				
 				//Write string to command output file
