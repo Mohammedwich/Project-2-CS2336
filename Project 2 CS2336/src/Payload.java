@@ -1,9 +1,7 @@
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-
 //Mohammed Ahmed, msa190000
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Payload implements Comparable<Payload>
 {

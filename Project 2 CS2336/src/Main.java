@@ -306,7 +306,7 @@ public class Main
 				++currentCoordinate;	//sum until last coordinate is the same as first coordinate
 				
 				//Prevents out of bounds 
-				if(currentCoordinate == (listSize - 1))
+				if(currentCoordinate == (listSize ))
 				{
 					break;
 				}

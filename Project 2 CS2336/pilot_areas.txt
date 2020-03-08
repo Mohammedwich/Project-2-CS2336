@@ -1,5 +1,5 @@
 Boshek	133.70
-Dengar	100.70
-Finn	321.49
-Malakili	2001.91
-Oleg	778.77
+Dengar	83.20
+Finn	237.13
+Malakili	1731.95
+Oleg	776.81
