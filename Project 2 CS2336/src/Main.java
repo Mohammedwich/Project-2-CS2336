@@ -12,24 +12,19 @@ import java.util.regex.*;
 
 //TODO: remove "debug code"
 //TODO: do input validation
-//TODO: add input validation for data extraction
+//TODO: add input validation for data extraction and confirm the regex patterns work as intended
 public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		/*
+		
 		//debug test code //debug code
-		ArrayList<ArrayList<Double>> testList = new ArrayList<ArrayList<Double>>();
-		ArrayList<Double> doubleList = new ArrayList<Double>();
-		doubleList.add(1.0);
-		doubleList.add(2.0);
-		testList.add(doubleList);
-		testList.add(new ArrayList<Double>(doubleList));
+		String testString = "g-'g 1.2,21 2,2.3 3,4";
+		Pattern testPattern = Pattern.compile("[a-zA-Z]+[-'a-zA-z0-9]+([\\s][\\d]+[.]?[\\d]*[,][\\d]+[.]?[\\d]*)+"); 
+		Matcher testMatcher = testPattern.matcher(testString);
 		
-		testList.get(0).add(3.0);
+		System.out.println(testMatcher.matches());
 		
-		System.out.println(testList);
-		*/
 		
 		// Create and check files 
 		//*************************************************************************************************************
@@ -161,7 +156,7 @@ public class Main
 		Pattern sortPattern = Pattern.compile("[sS][oO][rR][tT][\\s][aApP][rRiI][eElL][aAoO][tT]*[\\s][aAdD][sScC][cC]"); // pattern for exactly(case insensitive): sort <area/pilot> <asc/dec>
 		Pattern nameSearchPattern = Pattern.compile("[a-zA-Z]+[-'a-zA-z0-9]+"); // pattern for a name that starts with a letter and contains alphanumeric characters, hyphens and apostrophe's
 		Pattern areaSearchPattern = Pattern.compile("[\\d]+[.]?[\\d]*"); //pattern for area. one or more numbers followed by a dot/no dot followed by zero or more numbers
-		//if we need to adjust this pattern for cases with a decimal followed by no numbers, try matcher.matches("\\b[.][\\d]+\\b")) word boundary of .xxxx if this pattern is syntaxicaally correct, test it first
+		//TODO: if we need to adjust this pattern for cases with a decimal followed by no numbers, try matcher.matches("\\b[.][\\d]+\\b")) word boundary of .xxxx if this pattern is syntaxicaally correct, test it first
 		
 		while(commandReader.hasNextLine())
 		{
@@ -327,6 +322,10 @@ public class Main
 		
 		static void extractData(ArrayList<String> theNamesList, ArrayList<ArrayList<ArrayList<Double>>> theCoordinatesList, File inputFile) throws FileNotFoundException
 		{
+			//TODO: confirm this pattern works as intended
+			//should be a pattern for a name then space then (a coordinate point followed by one or no white space) repeating
+			Pattern validPilotCoordinatesPattern = Pattern.compile("[a-zA-Z]+[-'a-zA-z0-9]+([\\s][\\d]+[.]?[\\d]*[,][\\d]+[.]?[\\d]*)+");   
+			
 			//For the list assume the first dimension holds the specific pilot's list of coordinates, second dimension holds a list of all
 			//coordinates for said pilot third dimension holds a list of two values(x and y coordinate at positions 0 and 1)
 			//So list[0][0][1] is first pilot's first coordinate's y value
@@ -343,12 +342,18 @@ public class Main
 				//TODO: remove this line if not needed anymore
 				//int currentCoordinateindex = 0; // Allows us to take both parts of a coordinate since space separates them
 				
-				//Put line in a string and commas with spaces before passing the string to another scanner
+				//Put line in a string, check it then if valid, replace commas with spaces before passing the string to another scanner
 				currentLine = fileReader.nextLine();
-				currentLine = currentLine.replace(',', ' ');
 				
 				//Check for valid pattern in line, if not valid, skip line
-				// add code here
+				Matcher pilotCoordinatesMatcher = validPilotCoordinatesPattern.matcher(currentLine);
+				if(pilotCoordinatesMatcher.matches() == false)
+				{
+					continue;
+				}
+				//now replace commas and proceed
+				currentLine = currentLine.replace(',', ' ');
+				
 				
 				
 				Scanner stringScanner = new Scanner(currentLine); // Created so we can pick the string word by word
