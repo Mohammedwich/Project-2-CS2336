@@ -1,5 +1,6 @@
-Boshek	133.70
-Dengar	83.20
-Finn	237.13
 Malakili	1731.95
 Oleg	776.81
+Finn	237.13
+Boshek	133.70
+Dengar	83.20
+Billy	83.20

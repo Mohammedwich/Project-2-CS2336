@@ -131,6 +131,7 @@ public class Main
 //*************************************************************************************************************************
 		LinkedList<Payload> payLoadsList = new LinkedList<Payload>();
 		
+		
 		for(int i = 0; i < namesList.size(); ++i)
 		{
 			String currentName = namesList.get(i);
@@ -145,7 +146,6 @@ public class Main
 		}
 		
 		
-		
 		//read commands and write results to output file results.txt
 //*************************************************************************************************************************
 		
@@ -153,8 +153,8 @@ public class Main
 		PrintWriter commandWriter = new PrintWriter(commandResultsFile);
 		
 		//valid line patterns 
-		Pattern sortPattern = Pattern.compile("[sS][oO][rR][tT][\\s][aApP][rRiI][eElL][aAoO][tT]*[\\s][aAdD][sScC][cC]"); // pattern for exactly(case insensitive): sort <area/pilot> <asc/dec>
-		Pattern nameSearchPattern = Pattern.compile("[a-zA-Z]+[-'a-zA-z0-9]+"); // pattern for a name that starts with a letter and contains alphanumeric characters, hyphens and apostrophe's
+		Pattern sortPattern = Pattern.compile("[sS][oO][rR][tT][\\s][aApP][rRiI][eElL][aAoO][tT]*[\\s][aAdD][sSeE][cC]"); // pattern for exactly(case insensitive): sort <area/pilot> <asc/dec>
+		Pattern nameSearchPattern = Pattern.compile("[a-zA-Z]+[-'\\sa-zA-z0-9]+"); // pattern for a name that starts with a letter and contains alphanumeric characters, hyphens and apostrophe's
 		Pattern areaSearchPattern = Pattern.compile("[\\d]+[.]?[\\d]*"); //pattern for area. one or more numbers followed by a dot/no dot followed by zero or more numbers
 		//TODO: if we need to adjust this pattern for cases with a decimal followed by no numbers, try matcher.matches("\\b[.][\\d]+\\b")) word boundary of .xxxx if this pattern is syntaxicaally correct, test it first
 		
@@ -232,12 +232,14 @@ public class Main
 				//Write string to command output file
 				commandWriter.append(outputString + "\n");
 				
-			}
+				continue; // This is to avoid the next if from matching "sort" to a name and executing as well
+				
+			} // end of sort match process
 			
 			//search for the string and write the result of the search to an output file
 			if(nameSearchMatcher.matches())
 			{
-				String nameToSearch = lineReader.next();
+				String nameToSearch = currentLine;
 				
 				String searchResult = payLoadsList.search(nameToSearch);
 				
@@ -273,7 +275,8 @@ public class Main
 		
 		//Write to pilot_areas.txt using the list's toString() method
 		PrintWriter pilotWriter = new PrintWriter(pilotAreasOutputFile);
-		pilotWriter.append(payLoadsList.toString());
+		
+		pilotWriter.print(payLoadsList.toString());
 		
 		
 		pilotWriter.close();
@@ -329,7 +332,7 @@ public class Main
 		{
 			//TODO: confirm this pattern works as intended
 			//should be a pattern for a name then space then (a coordinate point followed by one or no white space) repeating
-			Pattern validPilotCoordinatesPattern = Pattern.compile("[a-zA-Z]+[-'a-zA-z0-9]+([\\s][-]?[\\d]+[.]?[\\d]*[,][-]?[\\d]+[.]?[\\d]*)+");   
+			Pattern validPilotCoordinatesPattern = Pattern.compile("[a-zA-Z]+[-'\\sa-zA-z0-9]+([\\s][-]?[\\d]+[.]?[\\d]*[,][-]?[\\d]+[.]?[\\d]*)+");   
 			
 			//For the list assume the first dimension holds the specific pilot's list of coordinates, second dimension holds a list of all
 			//coordinates for said pilot third dimension holds a list of two values(x and y coordinate at positions 0 and 1)
@@ -364,7 +367,8 @@ public class Main
 				Scanner stringScanner = new Scanner(currentLine); // Created so we can pick the string word by word
 				
 				stringScanner.useDelimiter(scannerDelimiterPattern); //change delimiter to pick the name
-				theNamesList.add(stringScanner.next()); // Store the pilot's name before storing coordinates
+				String theName = stringScanner.next();
+				theNamesList.add(theName); // Store the pilot's name before storing coordinates
 				stringScanner.useDelimiter(" "); //change delimiter back to space
 				
 				//create and add the list of coordinates so we can add to it.

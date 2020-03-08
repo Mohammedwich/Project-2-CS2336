@@ -97,7 +97,7 @@ public class Payload implements Comparable<Payload>
 	@Override
 	public String toString()
 	{
-		String result = String.format("%s\t%.2f", name,area); 
+		String result = String.format("%s\t%.2f", name, area); 
 		return result;
 	}
 }

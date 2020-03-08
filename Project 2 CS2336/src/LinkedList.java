@@ -152,8 +152,7 @@ public class LinkedList<T extends Comparable<T>>
 			}
 			
 			listHead = nodesArray.get(0);
-			listTail = nodesArray.get(initialSize-1);
-			
+			listTail = nodesArray.get(initialSize-1);			
 			
 		} //if byAscending==true end
 		
@@ -172,7 +171,8 @@ public class LinkedList<T extends Comparable<T>>
 				
 				while(currentNode != null) //Iterates over the list and gets the smallest value we don't already have.
 				{					
-					if(currentNode.compareTo(smallestOrLargestNode) >= 1)
+					//Check: Don't Erase this comment!! Used to be >= 1, changed to zero to fix an issue where equal items were not being added. See if reverting or adjusting ascending sort fixes any potential issues with this in the future  
+					if(currentNode.compareTo(smallestOrLargestNode) >= 1) 
 			    	{
 						if(!nodesArray.contains(currentNode))
 						{
@@ -217,17 +217,19 @@ public class LinkedList<T extends Comparable<T>>
 			
 		} //if byAscending==false end
 		
+		//TODO: remove this code block if not needed
+		/*
 		String sortedHeadValue = listHead.toString();
 		String sortedTailValue = listTail.toString();
 		
 		System.out.println("Head: " + sortedHeadValue + ", " + "Tail: " + sortedTailValue);
-		
-		
+		*/
+		System.out.println(this);
 	} // sort function end
 
 	public String search(String keyword)
 	{
-		String result = keyword + " not found.";
+		String result = keyword + " not found";
 		
 		String currentStringToCheck;
 		Node<T> currentNode = listHead;
