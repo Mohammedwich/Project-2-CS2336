@@ -1,3 +1,7 @@
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 //Mohammed Ahmed, msa190000
 
 
@@ -42,7 +46,8 @@ public class Payload implements Comparable<Payload>
 	
 	public void setArea(double theArea)
 	{
-		area = theArea;
+		BigDecimal theNum = new BigDecimal(theArea).setScale(2, RoundingMode.HALF_UP);
+		area = theNum.doubleValue();
 	}
 	
 	public static void setCompareFlag(boolean theFlag)
@@ -94,7 +99,7 @@ public class Payload implements Comparable<Payload>
 	@Override
 	public String toString()
 	{
-		String result = (name + "\t" + area); 
+		String result = String.format("%s\t%.2f", name,area); 
 		return result;
 	}
 }

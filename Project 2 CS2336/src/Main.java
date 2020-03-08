@@ -271,8 +271,12 @@ public class Main
 		} //command reading loop end
 		
 		
+		//Write to pilot_areas.txt using the list's toString() method
+		PrintWriter pilotWriter = new PrintWriter(pilotAreasOutputFile);
+		pilotWriter.append(payLoadsList.toString());
 		
 		
+		pilotWriter.close();
 		inputScanner.close();
 		lineCounter.close();
 		commandReader.close();
@@ -302,16 +306,17 @@ public class Main
 				++currentCoordinate;	//sum until last coordinate is the same as first coordinate
 				
 				//Prevents out of bounds 
-				if(currentCoordinate == (listSize - 2))
+				if(currentCoordinate == (listSize - 1))
 				{
 					break;
 				}
 			}
-			
+			//TODO: remove this code block if it is not necessary. Else, activate it and change above from (listSize - 1) to (listSize - 2)
+			/*
 			//Do it once more for the last coordinate
 			sum += (theList.get(currentCoordinate).get(0) + theList.get(currentCoordinate-1).get(0)) * 
 					(theList.get(currentCoordinate).get(1) - theList.get(currentCoordinate-1).get(1));
-			
+			*/
 			
 			area = 0.5 * Math.abs(sum);
 			//TODO: see if we need to do any rounding here
