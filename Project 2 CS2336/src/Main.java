@@ -17,14 +17,14 @@ public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		
+		/*
 		//debug test code //debug code
 		String testString = "g-'g 1.2,21 2,2.3 3,4";
 		Pattern testPattern = Pattern.compile("[a-zA-Z]+[-'a-zA-z0-9]+([\\s][\\d]+[.]?[\\d]*[,][\\d]+[.]?[\\d]*)+"); 
 		Matcher testMatcher = testPattern.matcher(testString);
 		
 		System.out.println(testMatcher.matches());
-		
+		*/
 		
 		// Create and check files 
 		//*************************************************************************************************************
@@ -324,7 +324,7 @@ public class Main
 		{
 			//TODO: confirm this pattern works as intended
 			//should be a pattern for a name then space then (a coordinate point followed by one or no white space) repeating
-			Pattern validPilotCoordinatesPattern = Pattern.compile("[a-zA-Z]+[-'a-zA-z0-9]+([\\s][\\d]+[.]?[\\d]*[,][\\d]+[.]?[\\d]*)+");   
+			Pattern validPilotCoordinatesPattern = Pattern.compile("[a-zA-Z]+[-'a-zA-z0-9]+([\\s][-]?[\\d]+[.]?[\\d]*[,][-]?[\\d]+[.]?[\\d]*)+");   
 			
 			//For the list assume the first dimension holds the specific pilot's list of coordinates, second dimension holds a list of all
 			//coordinates for said pilot third dimension holds a list of two values(x and y coordinate at positions 0 and 1)
