@@ -5,7 +5,7 @@ public class Payload implements Comparable<Payload>
 {
 	private String name;
 	private double area;
-	private boolean compareByName;  //false if compare by area, true if compare by name
+	private static boolean compareByName;  //false if compare by area, true if compare by name
 
 	public Payload()
 	{
@@ -45,7 +45,7 @@ public class Payload implements Comparable<Payload>
 		area = theArea;
 	}
 	
-	public void setCompareFlag(boolean theFlag)
+	public static void setCompareFlag(boolean theFlag)
 	{
 		compareByName = theFlag;
 	}
