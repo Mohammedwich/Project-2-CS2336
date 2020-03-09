@@ -4,3 +4,4 @@ Boshek
 133.70
 sort pilot asc
 sort area dec
+sort invalid 

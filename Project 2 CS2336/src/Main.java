@@ -240,11 +240,15 @@ public class Main
 			//search for the string and write the result of the search to an output file
 			if(nameSearchMatcher.matches())
 			{
-				String nameToSearch = currentLine;
-				
-				String searchResult = payLoadsList.search(nameToSearch);
-				
-				commandWriter.append(searchResult + "\n");
+				// if contains "sort" then we have an invalid sort command that meets name search pattern so we will not search
+				if(currentLine.contains("sort") == false)
+				{
+					String nameToSearch = currentLine;
+					
+					String searchResult = payLoadsList.search(nameToSearch);
+					
+					commandWriter.append(searchResult + "\n");
+				}
 			}
 			
 			//search for the string and write the result of the search to an output file
