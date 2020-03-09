@@ -18,12 +18,11 @@ public class Main
 	public static void main(String[] args) throws FileNotFoundException
 	{
 		/*
-		//debug test code //debug code
-		String testString = "g-'g 1.2,21 2,2.3 3,4";
-		Pattern testPattern = Pattern.compile("[a-zA-Z]+[-'a-zA-z0-9]+([\\s][\\d]+[.]?[\\d]*[,][\\d]+[.]?[\\d]*)+"); 
-		Matcher testMatcher = testPattern.matcher(testString);
+		String test1 = null;
+		String test2 = "Pie";
 		
-		System.out.println(testMatcher.matches());
+		int testResult = test2.compareTo(test1);
+		System.out.println(testResult);
 		*/
 		
 		// Create and check files 
@@ -417,6 +416,9 @@ public class Main
 			
 			writer.close();
 		}
+		
+		/*********************************************************************************************/
+		
 
 }//main class end
 

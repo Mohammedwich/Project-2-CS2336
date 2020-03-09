@@ -113,7 +113,7 @@ public class LinkedList<T extends Comparable<T>>
 				{					
 					if(currentNode.compareTo(smallestOrLargestNode) <= -1)
 			    	{
-						if(!nodesArray.contains(currentNode))
+						if(nodesArray.contains(currentNode) == false)
 						{
 							smallestOrLargestNode = currentNode;
 						}
@@ -178,7 +178,7 @@ public class LinkedList<T extends Comparable<T>>
 					//Check: Don't Erase this comment!! Used to be >= 1, changed to zero to fix an issue where equal items were not being added. See if reverting or adjusting ascending sort fixes any potential issues with this in the future  
 					if(currentNode.compareTo(smallestOrLargestNode) >= 1) 
 			    	{
-						if(!nodesArray.contains(currentNode))
+						if(nodesArray.contains(currentNode) == false)
 						{
 							smallestOrLargestNode = currentNode;
 						}

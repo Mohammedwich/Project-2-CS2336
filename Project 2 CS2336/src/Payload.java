@@ -32,7 +32,7 @@ public class Payload implements Comparable<Payload>
 		return area;
 	}
 	
-	public boolean getCompareFlag()
+	public static boolean getCompareFlag()
 	{
 		return compareByName;
 	}
