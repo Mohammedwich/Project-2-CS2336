@@ -206,16 +206,16 @@ public class Main
 				//sort the list ascending or descending. sort() parameter = true means sort by ascending, false = descending
 				if(ascendingOrDescending.compareToIgnoreCase("asc") == 0)
 				{
-					payLoadsList.sort(true);
+					payLoadsList.sort2(true);
 				}
 				else if(ascendingOrDescending.compareToIgnoreCase("dec") == 0)
 				{
-					payLoadsList.sort(false);
+					payLoadsList.sort2(false);
 				}
 				else
 				{
 					System.out.println("Invalid sort criteria. The word is not asc or dec. Default criteria set to ascending");
-					payLoadsList.sort(true);
+					payLoadsList.sort2(true);
 				}
 				
 				//Create the string we will write to the output file
@@ -231,7 +231,7 @@ public class Main
 				//Write string to command output file
 				commandWriter.append(outputString + "\n");
 				
-				continue; // This is to avoid the next if from matching "sort" to a name and executing as well
+				continue; // This is to avoid the next if statement from matching "sort" to a name and executing as well
 				
 			} // end of sort match process
 			

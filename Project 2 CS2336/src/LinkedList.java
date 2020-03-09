@@ -234,6 +234,125 @@ public class LinkedList<T extends Comparable<T>>
 		System.out.println(this);
 	} // sort function end
 
+	public void sort2(boolean byAscending)
+	{
+		int initialSize = size;
+		ArrayList<Node<T>> nodesArray = new ArrayList<Node<T>>(); //will hold elements while they get bubble sorted
+		Node<T> currentNode = listHead;
+		boolean switchHappened = true;
+		
+		//load all our nodes for processing
+		while(currentNode != null)
+		{
+			nodesArray.add(currentNode);
+			currentNode = currentNode.getNext();
+		}
+		
+		//If we want to sort by ascending
+		if(byAscending == true)
+		{
+			while(switchHappened == true)
+			{
+				switchHappened = false; //set to false, code that switches will make it true again if it executes
+				
+				for(int currentItem = 0; currentItem < initialSize; ++currentItem)
+				{
+					int nextItem = currentItem + 1;
+					
+					if(nextItem != initialSize)
+					{
+						if(nodesArray.get(currentItem).compareTo(nodesArray.get(nextItem)) >= 1)
+						{
+							Node<T> tempNode = nodesArray.get(currentItem);
+							nodesArray.set(currentItem, nodesArray.get(nextItem)); //put the smaller item in currentItem position
+							nodesArray.set(nextItem, tempNode); //put the larger item in nextItem position
+							switchHappened = true;
+						}
+					}					
+				} //when this for loop ends, one largest item will have been pushed to where it belongs.
+			} // This while loop ends when no switch happens which means elements are in order
+			
+			//Now we link the nodes
+			for(int i = 0; i < initialSize; ++i)
+			{
+				Node<T> theNode = nodesArray.get(i);
+				
+				if(i == 0)
+				{
+					theNode.setPrevious(null);
+					theNode.setNext(nodesArray.get(i+1));
+				}
+				else if(i == (initialSize-1))
+				{
+					theNode.setPrevious(nodesArray.get(i-1));
+					theNode.setNext(null);
+				}
+				else
+				{
+					theNode.setPrevious(nodesArray.get(i-1));
+					theNode.setNext(nodesArray.get(i+1));
+				}
+			}
+			
+			listHead = nodesArray.get(0);
+			listTail = nodesArray.get(initialSize-1);
+			
+		} // ascending sort end
+		
+		// If we want to sort by descending
+		if(byAscending == false)
+		{
+			while(switchHappened == true)
+			{
+				switchHappened = false; //set to false, code that switches will make it true again if it executes
+				
+				for(int currentItem = 0; currentItem < initialSize; ++currentItem)
+				{
+					int nextItem = currentItem + 1;
+					
+					if(nextItem != initialSize)
+					{
+						if(nodesArray.get(currentItem).compareTo(nodesArray.get(nextItem)) <= -1)
+						{
+							Node<T> tempNode = nodesArray.get(currentItem);
+							nodesArray.set(currentItem, nodesArray.get(nextItem)); //put the smaller item in currentItem position
+							nodesArray.set(nextItem, tempNode); //put the larger item in nextItem position
+							switchHappened = true;
+						}
+					}					
+				} //when this for loop ends, one smallest item will have been pushed to where it belongs.
+			} // This while loop ends when no switch happens which means elements are in order
+			
+			//Now we link the nodes
+			for(int i = 0; i < initialSize; ++i)
+			{
+				Node<T> theNode = nodesArray.get(i);
+				
+				if(i == 0)
+				{
+					theNode.setPrevious(null);
+					theNode.setNext(nodesArray.get(i+1));
+				}
+				else if(i == (initialSize-1))
+				{
+					theNode.setPrevious(nodesArray.get(i-1));
+					theNode.setNext(null);
+				}
+				else
+				{
+					theNode.setPrevious(nodesArray.get(i-1));
+					theNode.setNext(nodesArray.get(i+1));
+				}
+			}
+			
+			listHead = nodesArray.get(0);
+			listTail = nodesArray.get(initialSize-1);
+			
+		} // descending sort end
+		
+	} // sort end
+	
+	
 	public String search(String keyword)
 	{
 		String result = keyword + " not found";
