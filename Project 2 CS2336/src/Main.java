@@ -18,12 +18,14 @@ public class Main
 	public static void main(String[] args) throws FileNotFoundException
 	{
 		/*
-		String test1 = null;
-		String test2 = "Pie";
+		Pattern testPattern = Pattern.compile("[a-zA-Z]+[-'\\sa-zA-z0-9]+");
+		String testString = "_";
+		Matcher testMatcher = testPattern.matcher(testString);
 		
-		int testResult = test2.compareTo(test1);
-		System.out.println(testResult);
+		System.out.println(testString.contains("_"));
+		System.out.println(testMatcher.matches());
 		*/
+		
 		
 		// Create and check files 
 		//*************************************************************************************************************
@@ -354,7 +356,7 @@ public class Main
 				
 				//Check for valid pattern in line, if not valid, skip line
 				Matcher pilotCoordinatesMatcher = validPilotCoordinatesPattern.matcher(currentLine);
-				if(pilotCoordinatesMatcher.matches() == false)
+				if(pilotCoordinatesMatcher.matches() == false || currentLine.contains("_") == true) //regex isn't catching underscore so we will manually ignore it
 				{
 					continue;
 				}
