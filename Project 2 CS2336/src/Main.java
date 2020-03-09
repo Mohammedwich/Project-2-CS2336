@@ -9,24 +9,10 @@ import java.util.Scanner;
 import java.util.regex.*;
 
 
-
-//TODO: remove "debug code"
-//TODO: do input validation
-//TODO: add input validation for data extraction and confirm the regex patterns work as intended
 public class Main
 {
 	public static void main(String[] args) throws FileNotFoundException
-	{
-		/*
-		Pattern testPattern = Pattern.compile("[a-zA-Z]+[-'\\sa-zA-z0-9]+");
-		String testString = "_";
-		Matcher testMatcher = testPattern.matcher(testString);
-		
-		System.out.println(testString.contains("_"));
-		System.out.println(testMatcher.matches());
-		*/
-		
-		
+	{		
 		// Create and check files 
 		//*************************************************************************************************************
 		String pilotNamesInputName;
@@ -98,32 +84,16 @@ public class Main
 		ArrayList<String> namesList = new ArrayList<String>();
 		ArrayList<Double> areasList = new ArrayList<Double>();
 		
-		//TODO: remove this line if not needed
-		int numberOfLinesInInputFile = 0; //will use this to expand the list so elements can be referenced in extractData()
-		
-		Scanner lineCounter = new Scanner(pilotAreasInputFile);
-		while(lineCounter.hasNextLine())
-		{
-			++numberOfLinesInInputFile;
-			lineCounter.nextLine();
-		}
-		
 		//*********************************
 		
 		//Take data from file and put it in arrays
 		extractData(namesList, coordinatesList, pilotAreasInputFile);
-		//System.out.println(namesList); //debug code
-		//System.out.println(coordinatesList); //debug code
 				
 		//Passing each pilot's 2D coordinates array to the calculateArea function
 		for(int i = 0; i < namesList.size(); ++i)
 		{
 			areasList.add(calculateArea(coordinatesList.get(i)) );
 		}
-		
-		
-		//System.out.println(areasList); //debug code
-		
 		
 		//Write data from arrays to output file
 		writeData(namesList, areasList, pilotAreasOutputFile);	
@@ -157,8 +127,7 @@ public class Main
 		Pattern sortPattern = Pattern.compile("[sS][oO][rR][tT][\\s][aApP][rRiI][eElL][aAoO][tT]*[\\s][aAdD][sSeE][cC]"); // pattern for exactly(case insensitive): sort <area/pilot> <asc/dec>
 		Pattern nameSearchPattern = Pattern.compile("[a-zA-Z]+[-'\\sa-zA-z0-9]+"); // pattern for a name that starts with a letter and contains alphanumeric characters, hyphens and apostrophe's
 		Pattern areaSearchPattern = Pattern.compile("[\\d]+[.]?[\\d]*"); //pattern for area. one or more numbers followed by a dot/no dot followed by zero or more numbers
-		//TODO: if we need to adjust this pattern for cases with a decimal followed by no numbers, try matcher.matches("\\b[.][\\d]+\\b")) word boundary of .xxxx if this pattern is syntaxicaally correct, test it first
-		
+				
 		while(commandReader.hasNextLine())
 		{
 			String currentLine = commandReader.nextLine();
@@ -208,16 +177,16 @@ public class Main
 				//sort the list ascending or descending. sort() parameter = true means sort by ascending, false = descending
 				if(ascendingOrDescending.compareToIgnoreCase("asc") == 0)
 				{
-					payLoadsList.sort2(true);
+					payLoadsList.sort(true);
 				}
 				else if(ascendingOrDescending.compareToIgnoreCase("dec") == 0)
 				{
-					payLoadsList.sort2(false);
+					payLoadsList.sort(false);
 				}
 				else
 				{
 					System.out.println("Invalid sort criteria. The word is not asc or dec. Default criteria set to ascending");
-					payLoadsList.sort2(true);
+					payLoadsList.sort(true);
 				}
 				
 				//Create the string we will write to the output file
@@ -286,7 +255,6 @@ public class Main
 		
 		pilotWriter.close();
 		inputScanner.close();
-		lineCounter.close();
 		commandReader.close();
 		commandWriter.close();
 		
@@ -319,15 +287,8 @@ public class Main
 					break;
 				}
 			}
-			//TODO: remove this code block if it is not necessary. Else, activate it and change above from (listSize - 1) to (listSize - 2)
-			/*
-			//Do it once more for the last coordinate
-			sum += (theList.get(currentCoordinate).get(0) + theList.get(currentCoordinate-1).get(0)) * 
-					(theList.get(currentCoordinate).get(1) - theList.get(currentCoordinate-1).get(1));
-			*/
 			
 			area = 0.5 * Math.abs(sum);
-			//TODO: see if we need to do any rounding here
 			return area;
 		}
 		
@@ -335,7 +296,6 @@ public class Main
 		
 		static void extractData(ArrayList<String> theNamesList, ArrayList<ArrayList<ArrayList<Double>>> theCoordinatesList, File inputFile) throws FileNotFoundException
 		{
-			//TODO: confirm this pattern works as intended
 			//should be a pattern for a name then space then (a coordinate point followed by one or no white space) repeating
 			Pattern validPilotCoordinatesPattern = Pattern.compile("[a-zA-Z]+[-'\\sa-zA-z0-9]+([\\s][-]?[\\d]+[.]?[\\d]*[,][-]?[\\d]+[.]?[\\d]*)+");   
 			
@@ -351,10 +311,7 @@ public class Main
 			Pattern scannerDelimiterPattern = Pattern.compile("[\\s][-\\d]"); 
 			
 			while(fileReader.hasNextLine() /*&& currentLineIndex < theCoordinatesList.size()*/) // unnecessary code in comment?
-			{
-				//TODO: remove this line if not needed anymore
-				//int currentCoordinateindex = 0; // Allows us to take both parts of a coordinate since space separates them
-				
+			{				
 				//Put line in a string, check it then if valid, replace commas with spaces before passing the string to another scanner
 				currentLine = fileReader.nextLine();
 				
@@ -366,7 +323,6 @@ public class Main
 				}
 				//now replace commas and proceed
 				currentLine = currentLine.replace(',', ' ');
-				
 				
 				
 				Scanner stringScanner = new Scanner(currentLine); // Created so we can pick the string word by word
@@ -391,8 +347,6 @@ public class Main
 					doubleList.add(y);
 					
 					theCoordinatesList.get(currentLineIndex).add(doubleList);
-									
-					//++currentCoordinateindex; //Remove this line if not needed anymore
 				}
 				
 				++currentLineIndex;
@@ -408,7 +362,6 @@ public class Main
 		// Takes array of names, array of areas and an output file. Writes every name followed by a tab and its area
 		static void writeData(ArrayList<String> theNamesList, ArrayList<Double> theAreasList, File theFile) throws FileNotFoundException
 		{
-			//System.out.println(theNamesList); //debug code
 			PrintWriter writer = new PrintWriter(theFile);
 			
 			for(int i = 0; i < theNamesList.size(); ++i)
@@ -422,8 +375,6 @@ public class Main
 			
 			writer.close();
 		}
-		
-		/*********************************************************************************************/
 		
 
 }//main class end
